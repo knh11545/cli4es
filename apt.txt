@@ -1,0 +1,9 @@
+vim
+vim-scripts
+git
+git-doc
+rsync
+jq
+detox
+pandoc
+

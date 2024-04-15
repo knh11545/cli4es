@@ -5,15 +5,14 @@
 # Do not ignore errors silently:
 set -e
 
-apt-get update
-apt-get install vim vim-scripts git git-doc rsync jq detox pandoc
-
 # Include the scripts in this repo into PATH:
 # The repo' content will be placed in the $HOME folder
-echo "export PATH=\${HOME}/bin:\${PATH}" >> $HOME/.bash_profile
+# echo "export PATH=\${HOME}/bin:\${PATH}" >> $HOME/.bash_profile
+export PATH=${HOME}/bin:${PATH}
 
 # Install NLM's Entrez Direct:
 # See: 
 sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"
-echo "export PATH=\$HOME/edirect:\$PATH" >> $HOME/.bash_profile
+# echo "export PATH=\$HOME/edirect:\$PATH" >> $HOME/.bash_profile
+export PATH=$HOME/edirect:$PATH
 
