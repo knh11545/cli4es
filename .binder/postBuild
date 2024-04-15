@@ -6,7 +6,8 @@
 set -e
 
 # Include the scripts in this repo into PATH:
-export PATH=${PATH}:$(pwd)/bin/
+# The repo' content will be placed in the $HOME folder
+echo "export PATH=\${HOME}/bin:\${PATH}" >> $HOME/.bash_profile
 
 # Install NLM's Entrez Direct:
 # See: 
