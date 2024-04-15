@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# postBuild script for Binder
+# See here: https://mybinder.readthedocs.io/en/latest/using/config_files.html#postbuild-run-code-after-installing-the-environment
+
+# Do not ignore errors silently:
+set -e
+
+# Include the scripts in this repo into PATH:
+export PATH=${PATH}:$(pwd)/bin/
+
+# Install NLM's Entrez Direct:
+# See: 
+sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"
+echo "export PATH=\$HOME/edirect:\$PATH" >> $HOME/.bash_profile
+
