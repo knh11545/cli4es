@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# RIS Cochrane Library
+csplit --silent --digits=6 --elide-empty-files - '/^ER  - /3' '{*}'
+
