@@ -5,8 +5,8 @@
 # Do not ignore errors silently:
 set -e
 
-apt update
-apt install vim vim-scripts git git-doc rsync jq detox pandoc
+apt-get update
+apt-get install vim vim-scripts git git-doc rsync jq detox pandoc
 
 # Include the scripts in this repo into PATH:
 # The repo' content will be placed in the $HOME folder
