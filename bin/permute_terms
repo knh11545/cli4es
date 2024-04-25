@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+# Produce a list of phrases by permuting terms
+
+# Author: Helge Knüttel
+# Date: 2024
+
+# Some sensible settings. Taken from https://kvz.io/bash-best-practices.html
+set -o errexit  # exit when a command fails
+set -o pipefail # catch failing commands in a pipe
+set -o nounset  # exit when script tries to use undeclared variables
+# set -o xtrace # Trace what gets executed. Useful for debugging.
+
+# Help text
+PrintHelp() {
+
+  cat << "EOF"
+
+Produce a list of phrases by permuting terms
+
+  Input is from two files given as arguments. To each line of the first file
+  all the lines from the second file will be appended in a pairwise fashion.
+
+  The front and back terms will be sorted.
+
+  Output is written to STDOUT.
+
+USAGE
+
+  permute_terms <file1> <file2>
+
+  permute_terms -h | --help
+
+EXAMPLES
+
+  printf '%s\n' colon colonic > front.txt
+  cat front.txt
+
+    colon
+    colonic
+
+  printf '%s\n' cancer carcinoma adenocarcinoma > back.txt
+  cat back.txt
+
+    cancer
+    carcinoma
+    adenocarcinoma
+
+  permute_terms front.txt back.txt
+
+    colon adenocarcinoma
+    colon cancer
+    colon carcinoma
+    colonic adenocarcinoma
+    colonic cancer
+    colonic carcinoma
+
+EOF
+}
+
+
+# FIXME: Parsing arguments is not yet fully done!
+
+# Read command line arguments
+if [ $# -eq 0 ]
+then
+    echo "ERROR: Mandatory argument(s) missing." >&2
+    PrintHelp >&2
+    exit 1
+fi
+
+case "$1" in
+    -h|--help )
+        PrintHelp >&2
+        exit 0
+        ;;    
+    * )
+        # File for terms at the front
+        front_file="$1"
+        shift
+        ;;
+esac
+
+if [ $# -eq 0 ]
+then
+    echo "ERROR: Mandatory argument '<file2>' missing." >&2
+    PrintHelp >&2
+    exit 1
+fi
+
+# File for terms at the back
+back_file="$1"
+shift
+
+if [ $# -ne 0 ]
+then
+    echo "ERROR: Too many arguments." >&2
+    PrintHelp >&2
+    exit 1
+fi
+
+# Save old $IFS
+oldIFS="$IFS"
+# Set newline as input separator so that we work on whole lines:
+IFS=$'\n'
+
+# Permute the terms
+for front in $(sort "$front_file"); do
+    for back in $(sort "$back_file"); do
+        echo "$front $back"
+    done
+done
+
+# Restore $IFS
+IFS="$oldIFS"
+
